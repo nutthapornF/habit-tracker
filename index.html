@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 <title>My Habits</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23FFE4F0'/><ellipse cx='50' cy='22' rx='10' ry='18' fill='%23FFB3D1'/><ellipse cx='50' cy='22' rx='10' ry='18' fill='%23FFB3D1' transform='rotate(45 50 50)'/><ellipse cx='50' cy='22' rx='10' ry='18' fill='%23FFB3D1' transform='rotate(90 50 50)'/><ellipse cx='50' cy='22' rx='10' ry='18' fill='%23FFB3D1' transform='rotate(135 50 50)'/><ellipse cx='50' cy='22' rx='10' ry='18' fill='%23FFCDE3' transform='rotate(22.5 50 50)'/><ellipse cx='50' cy='22' rx='10' ry='18' fill='%23FFCDE3' transform='rotate(67.5 50 50)'/><ellipse cx='50' cy='22' rx='10' ry='18' fill='%23FFCDE3' transform='rotate(112.5 50 50)'/><ellipse cx='50' cy='22' rx='10' ry='18' fill='%23FFCDE3' transform='rotate(157.5 50 50)'/><circle cx='50' cy='50' r='16' fill='%23FFF0F7'/><polyline points='42,51 48,58 62,42' fill='none' stroke='%23FF6FA8' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/></svg>"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;background:#F8F0F8;display:flex;justify-content:center;min-height:100vh}
@@ -62,14 +63,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;ba
 .lbl{font-size:10px;font-weight:800;color:#A080A0;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:block}
 .inp{width:100%;border:1.5px solid #E8D8E8;border-radius:11px;padding:10px 13px;font-size:14px;color:#4A2A3A;outline:none;margin-bottom:13px;font-family:inherit;background:white}
 .inp:focus{border-color:#FF85A2}
-.cpicks{display:flex;gap:10px;margin-bottom:14px}
-.cp{width:34px;height:34px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:transform .15s;flex-shrink:0}
+.cpicks{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.cp{width:32px;height:32px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:transform .15s;flex-shrink:0}
 .cp.on{transform:scale(1.2);outline:3px solid #5A2A4A;outline-offset:2px}
-.ipicks{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.ipicks{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
 .ip{width:42px;height:42px;border-radius:11px;border:2px solid #E8D8E8;display:flex;align-items:center;justify-content:center;font-size:19px;cursor:pointer;background:white;transition:all .15s}
 .ip.on{border-color:#FF85A2;background:#FFF0F4;transform:scale(1.1)}
-.frow{display:flex;gap:7px;margin-bottom:15px}
-.fbtn{flex:1;padding:9px 4px;border-radius:10px;border:2px solid #E0D0E0;background:#F8F0F8;font-size:11px;font-weight:800;color:#9A7090;cursor:pointer;font-family:inherit;transition:all .15s}
+.frow{display:flex;gap:6px;margin-bottom:15px;flex-wrap:wrap}
+.fbtn{flex:1;min-width:80px;padding:9px 4px;border-radius:10px;border:2px solid #E0D0E0;background:#F8F0F8;font-size:11px;font-weight:800;color:#9A7090;cursor:pointer;font-family:inherit;transition:all .15s;text-align:center}
 .fbtn.on{background:#C9B8F0;border-color:#A98EE0;color:#3A2070}
 .savebtn{width:100%;background:#FF85A2;border:none;border-radius:13px;padding:13px;font-size:14px;font-weight:800;color:#7A2040;cursor:pointer;font-family:inherit;margin-bottom:9px}
 .delbtn{width:100%;background:#FFD0DC;border:none;border-radius:13px;padding:11px;font-size:13px;font-weight:800;color:#7A2040;cursor:pointer;font-family:inherit;margin-bottom:9px;display:none}
@@ -104,7 +105,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;ba
 <div class="app">
   <div class="hdr">
     <div class="htop"><span class="greet" id="G"></span><span class="dbadge" id="DB"></span></div>
-    <div class="htitle">My Habits</div>
+    <div class="htitle">My Habits 🌸</div>
     <div class="hsub" id="SB"></div>
     <div class="sstrip" id="SS"></div>
   </div>
@@ -151,6 +152,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;ba
       <button class="fbtn" data-f="daily">Every day</button>
       <button class="fbtn" data-f="weekdays">Mon–Fri</button>
       <button class="fbtn" data-f="weekends">Sat–Sun</button>
+      <button class="fbtn" data-f="1-2/week">1–2× week</button>
     </div>
     <button class="savebtn" id="SB2">Save habit</button>
     <button class="delbtn" id="SDB">Delete habit</button>
@@ -177,20 +179,40 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;ba
     <div class="slbl">focused on</div>
     <div class="shnm" id="SHN"></div>
     <div class="squote" id="SQ"></div>
-    <button class="sdone" id="SDN">Tick it done ✓</button>
+    <button class="sdone" id="SDN">Done ✓</button>
   </div>
 </div>
 
 <script>
-var CO=[{dot:'#FFB3C6',bg:'#FFF0F4',tx:'#A0385A',md:'#FF85A2'},{dot:'#C9B8F0',bg:'#F3F0FF',tx:'#5A3FA0',md:'#A98EE0'},{dot:'#A8E6CF',bg:'#F0FBF6',tx:'#2A7A56',md:'#6DD5A8'},{dot:'#FFD3A5',bg:'#FFF6EC',tx:'#9A5200',md:'#FFB366'},{dot:'#B3D9FF',bg:'#EEF6FF',tx:'#2A6EA0',md:'#7DBFFF'}];
-var IC=['🧘','🏃','💧','📚','✍️','🎨','🎵','🥦','💊','😴','🧹','💪','🌿','🧠','🫶','🌸','🍵','🚴'];
-var QS=[['You just invested in yourself. Best investment there is. 🌟','Every second you showed up counts. Keep going! 💪','Small steps, big life. You\'re doing it. 🌸','Proud of you for showing up today. ✨','You didn\'t feel like it and did it anyway. That\'s magic. ⚡','Look at you, building the life you want. 💫'],['Over 5 minutes in the zone! Your future self is grateful. 🔥','Solid focus. That\'s how habits become identity. 🌟','Building momentum one session at a time. 🚀','5+ minutes of pure you-time. Beautiful. 🌸'],['15+ minutes of deep focus — you\'re unstoppable! 🧠','Your past self would be so proud right now. ⭐','That kind of focus changes everything. 💪','Deep focus, deep growth. You absolutely crushed it. 🔥']];
+var CO=[
+  {dot:'#FFB3C6',bg:'#FFF0F4',tx:'#A0385A',md:'#FF85A2'},
+  {dot:'#C9B8F0',bg:'#F3F0FF',tx:'#5A3FA0',md:'#A98EE0'},
+  {dot:'#A8E6CF',bg:'#F0FBF6',tx:'#2A7A56',md:'#6DD5A8'},
+  {dot:'#FFD3A5',bg:'#FFF6EC',tx:'#9A5200',md:'#FFB366'},
+  {dot:'#B3D9FF',bg:'#EEF6FF',tx:'#2A6EA0',md:'#7DBFFF'},
+  {dot:'#66C5CC',bg:'#EEF9FA',tx:'#1A6B70',md:'#66C5CC'},
+  {dot:'#F89C74',bg:'#FEF2EC',tx:'#8A3A10',md:'#F89C74'},
+  {dot:'#87C55F',bg:'#F0F8EA',tx:'#2A5A10',md:'#87C55F'},
+  {dot:'#B3B3B3',bg:'#F5F5F5',tx:'#444444',md:'#B3B3B3'},
+  {dot:'#F6CF71',bg:'#FEFAEC',tx:'#7A5A00',md:'#F6CF71'},
+];
+var IC=['🧘','🏃','💧','📚','✍️','🎨','🎵','🥦','💊','😴','🧹','💪','🌿','🧠','🫶','🌸','🍵','🚴','☀️🚶🏽‍♀️','🌙🚶🏽‍♀️','💃','🏋️‍♀️'];
+var QS=[
+  ['You just invested in yourself. Best investment there is. 🌟','Every second you showed up counts. Keep going! 💪','Small steps, big life. You\'re doing it. 🌸','Proud of you for showing up today. ✨','You didn\'t feel like it and did it anyway. That\'s magic. ⚡','Look at you, building the life you want. 💫'],
+  ['Over 5 minutes in the zone! Your future self is grateful. 🔥','Solid focus. That\'s how habits become identity. 🌟','Building momentum one session at a time. 🚀','5+ minutes of pure you-time. Beautiful. 🌸'],
+  ['15+ minutes of deep focus — you\'re unstoppable! 🧠','Your past self would be so proud right now. ⭐','That kind of focus changes everything. 💪','Deep focus, deep growth. You absolutely crushed it. 🔥']
+];
 
-var H=JSON.parse(localStorage.getItem('myhabits')||'null')||[{id:1,n:'Morning stretch',i:'🧘',c:0,f:'daily',s:7,d:{}},{id:2,n:'Drink 8 glasses',i:'💧',c:2,f:'daily',s:12,d:{}},{id:3,n:'Read 20 mins',i:'📚',c:1,f:'daily',s:3,d:{}},{id:4,n:'No junk food',i:'🥦',c:3,f:'weekdays',s:5,d:{}}];
+var H=JSON.parse(localStorage.getItem('myhabits2')||'null')||[
+  {id:1,n:'Morning stretch',i:'🧘',c:0,f:'daily',s:7,d:{}},
+  {id:2,n:'Drink 8 glasses',i:'💧',c:2,f:'daily',s:12,d:{}},
+  {id:3,n:'Read 20 mins',i:'📚',c:1,f:'daily',s:3,d:{}},
+  {id:4,n:'No junk food',i:'🥦',c:3,f:'weekdays',s:5,d:{}},
+];
 var nid=H.length?Math.max.apply(null,H.map(function(h){return h.id;}))+1:1;
 var sc=0,si=IC[0],sf='daily',eid=null,atab=0,tid=null,tiv=null,tsec=0,trun=false;
 
-function save(){localStorage.setItem('myhabits',JSON.stringify(H));}
+function save(){localStorage.setItem('myhabits2',JSON.stringify(H));}
 function dk(d){return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate());}
 function p2(n){return String(n).padStart(2,'0');}
 function td(){return dk(new Date());}
