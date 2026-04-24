@@ -46,17 +46,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;ba
 .hrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #F5EEF2}
 .hrow:last-child{border-bottom:none}
 .hic{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
-.mcal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
-.mday{border-radius:7px;padding:3px 2px;min-height:36px;cursor:pointer}
-.mday:active{filter:brightness(.93)}
-.mdn{font-size:9px;font-weight:700;text-align:center;margin-bottom:1px}
-.mdics{display:flex;flex-wrap:wrap;justify-content:center;gap:1px}
+.mcal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.mday{border-radius:9px;padding:5px 3px;min-height:52px;cursor:pointer;transition:filter .1s}
+.mday:active{filter:brightness(.91)}
+.mdn{font-size:11px;font-weight:800;text-align:center;margin-bottom:3px}
+.mdics{display:flex;flex-wrap:wrap;justify-content:center;gap:2px}
 .mleg{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap}
 .mlegit{display:flex;align-items:center;gap:4px;font-size:10px;color:#C0A0B0}
 .mlegdot{width:9px;height:9px;border-radius:3px}
-.daytt{background:#FFF0F4;border:1.5px solid #FFD3E8;border-radius:12px;padding:11px 13px;margin-top:10px;display:none}
-.dttday{font-size:12px;font-weight:800;color:#5A2A4A;margin-bottom:6px}
-.dttrow{display:flex;align-items:center;gap:6px;padding:2px 0;font-size:11px}
+.daytt{background:#FFF0F4;border:1.5px solid #FFD3E8;border-radius:14px;padding:14px;margin-top:12px;display:none}
+.dtttop{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.dttday{font-size:13px;font-weight:800;color:#5A2A4A}
+.dttrow{display:flex;align-items:center;gap:8px;padding:5px 8px;font-size:12px;border-radius:10px;margin-bottom:3px;cursor:pointer;transition:background .15s}
+.dttrow:hover{background:rgba(255,180,210,.15)}
+.dttrow.done-row{background:rgba(168,230,207,.15)}
+.dttchk{width:22px;height:22px;border-radius:50%;border:2px solid #FFB3C6;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;transition:all .2s}
+.dttchk.on{background:#FF85A2;border-color:#FF85A2;color:white}
+.dttsec{font-size:10px;font-weight:700;color:#C0A0B0;margin-bottom:4px;margin-top:6px}
 .overlay{display:none;position:fixed;inset:0;background:rgba(80,20,60,.25);z-index:100;align-items:flex-end;justify-content:center}
 .overlay.on{display:flex}
 .modal{background:white;border-radius:24px 24px 0 0;padding:22px 18px 40px;width:100%;max-width:430px;max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
@@ -131,7 +137,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;ba
         <div class="mlegit"><div class="mlegdot" style="background:#F5EEF2"></div>Missed</div>
         <div class="mlegit" style="font-style:italic">Tap a day for details</div>
       </div>
-      <div class="daytt" id="DTT"></div>
+      <div class="daytt" id="DTT">
+        <div class="dtttop">
+          <span class="dttday" id="DTTD"></span>
+          
+        </div>
+        <div id="DTTL"></div>
+      </div>
     </div>
     <div class="card"><div class="ctitle">Monthly stats</div><div id="MS"></div></div>
   </div>
@@ -197,7 +209,7 @@ var CO=[
   {dot:'#B3B3B3',bg:'#F5F5F5',tx:'#444444',md:'#B3B3B3'},
   {dot:'#F6CF71',bg:'#FEFAEC',tx:'#7A5A00',md:'#F6CF71'},
 ];
-var IC=['🧘','🏃','💧','📚','✍️','🎨','🎵','🥦','💊','😴','🧹','💪','🌿','🧠','🫶','🌸','🍵','🚴','☀️🚶🏽‍♀️','🌙🚶🏽‍♀️','💃','🏋️‍♀️'];
+var IC=['🧘','🏃','💧','📚','✍️','🎨','🎵','🥦','💊','😴','🧹','💪','🌿','🧠','🫶','🌸','🍵','🚴','☀️🚶🏽‍♀️','🌙🚶🏽‍♀️','💃','🏋️‍♀️','🚶🏼‍♀️'];
 var QS=[
   ['You just invested in yourself. Best investment there is. 🌟','Every second you showed up counts. Keep going! 💪','Small steps, big life. You\'re doing it. 🌸','Proud of you for showing up today. ✨','You didn\'t feel like it and did it anyway. That\'s magic. ⚡','Look at you, building the life you want. 💫'],
   ['Over 5 minutes in the zone! Your future self is grateful. 🔥','Solid focus. That\'s how habits become identity. 🌟','Building momentum one session at a time. 🚀','5+ minutes of pure you-time. Beautiful. 🌸'],
@@ -293,7 +305,7 @@ function rM(){
     if(!fut&&tot>0){bg=pct>=1?'#A8E6CF':pct>0?'#FFD3A5':'#F5EEF2';fc=pct>=1?'#2A7A56':pct>0?'#9A5200':'#C0A0B0';}
     g+='<div class="mday" style="background:'+bg+';'+(isT?'box-shadow:0 0 0 2px #FF85A2;':'')+'" data-k="'+k+'">'
       +'<div class="mdn" style="color:'+fc+'">'+day+'</div>'
-      +'<div class="mdics">'+dh.map(function(h){return '<span style="font-size:8px;line-height:1.3">'+h.i+'</span>';}).join('')+'</div></div>';
+      +'<div class="mdics">'+dh.map(function(h){return '<span style="font-size:10px;line-height:1.4">'+h.i+'</span>';}).join('')+'</div></div>';
   }
   document.getElementById('MG').innerHTML=g;
   var pd=now.getDate(),md=0,mt=0,pf=0;
@@ -305,15 +317,46 @@ function rM(){
   document.getElementById('MS').innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px"><div style="background:#FFF0F4;border-radius:13px;padding:12px;text-align:center"><div style="font-size:22px;font-weight:800;color:#C0508A">'+md+'</div><div style="font-size:10px;font-weight:700;color:#A0385A;margin-top:2px">Done</div></div><div style="background:#F0FBF6;border-radius:13px;padding:12px;text-align:center"><div style="font-size:22px;font-weight:800;color:#2A7A56">'+mr+'%</div><div style="font-size:10px;font-weight:700;color:#2A7A56;margin-top:2px">Rate</div></div><div style="background:#F3F0FF;border-radius:13px;padding:12px;text-align:center"><div style="font-size:22px;font-weight:800;color:#5A3FA0">'+pf+'</div><div style="font-size:10px;font-weight:700;color:#5A3FA0;margin-top:2px">Perfect</div></div></div>';
 }
 
+var activeDTTKey=null;
+
 function showDTT(k){
+  activeDTTKey=k;
   var tt=document.getElementById('DTT');
-  var dh=H.filter(function(h){return isDn(h,k);}),uh=H.filter(function(h){return !isDn(h,k);});
   if(!H.length){tt.style.display='none';return;}
-  var label=new Date(k+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'});
-  var html='<div class="dttday">'+label+'</div>';
-  if(dh.length){html+='<div style="font-size:10px;color:#2A7A56;font-weight:800;margin-bottom:4px">✅ Completed ('+dh.length+')</div>';html+=dh.map(function(h){return '<div class="dttrow"><span>'+h.i+'</span><span style="color:#4A2A3A">'+h.n+'</span></div>';}).join('');}
-  if(uh.length){html+='<div style="font-size:10px;color:#C0A0B0;font-weight:800;margin:6px 0 4px">Missed ('+uh.length+')</div>';html+=uh.map(function(h){return '<div class="dttrow" style="opacity:.5"><span>'+h.i+'</span><span style="text-decoration:line-through;color:#C0A0B0">'+h.n+'</span></div>';}).join('');}
-  tt.innerHTML=html;tt.style.display='block';
+  var label=new Date(k+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  document.getElementById('DTTD').textContent=label;
+  renderDTT(k);
+  tt.style.display='block';
+  setTimeout(function(){tt.scrollIntoView({behavior:'smooth',block:'nearest'});},80);
+}
+
+function renderDTT(k){
+  var dh=H.filter(function(h){return isDn(h,k);});
+  var uh=H.filter(function(h){return !isDn(h,k);});
+  var html='';
+  if(dh.length){
+    html+='<div class="dttsec">✅ Completed ('+dh.length+')</div>';
+    html+=dh.map(function(h){
+      var c=CO[h.c];
+      return '<div class="dttrow done-row" data-dttog="'+h.id+'" data-dtkey="'+k+'">'
+        +'<div class="dttchk on" style="background:'+c.md+';border-color:'+c.md+'">✓</div>'
+        +'<span style="font-size:14px">'+h.i+'</span>'
+        +'<span style="color:#4A2A3A;font-weight:600;flex:1">'+h.n+'</span>'
+        +'<span style="font-size:10px;color:'+c.tx+';background:'+c.bg+';padding:2px 7px;border-radius:8px;font-weight:700">Done</span>'
+        +'</div>';
+    }).join('');
+  }
+  if(uh.length){
+    html+='<div class="dttsec">Missed ('+uh.length+')</div>';
+    html+=uh.map(function(h){
+      return '<div class="dttrow" data-dttog="'+h.id+'" data-dtkey="'+k+'">'
+        +'<div class="dttchk" style="border-color:#E0D0E8"></div>'
+        +'<span style="font-size:14px;opacity:.5">'+h.i+'</span>'
+        +'<span style="color:#C0A0B0;font-weight:600;flex:1;text-decoration:line-through">'+h.n+'</span>'
+        +'</div>';
+    }).join('');
+  }
+  document.getElementById('DTTL').innerHTML=html;
 }
 
 function openTimer(id){
@@ -360,7 +403,7 @@ function sw(i){
     document.getElementById('t'+x).classList.toggle('on',x===i);
     document.getElementById('v'+x).style.display=x===i?'block':'none';
   });
-  document.getElementById('DTT').style.display='none';
+  document.getElementById('DTT').style.display='none';activeDTTKey=null;
   render();
 }
 
@@ -420,6 +463,17 @@ document.getElementById('HL').addEventListener('click',function(e){
   if(tog){var id=parseInt(tog.dataset.toggle),h=H.find(function(x){return x.id===id;});if(!h)return;var k=td();if(!h.d)h.d={};if(h.d[k]){delete h.d[k];h.s=Math.max(0,(h.s||1)-1);}else{h.d[k]=true;h.s=(h.s||0)+1;}save();render();}
 });
 document.getElementById('MG').addEventListener('click',function(e){var t=e.target.closest('.mday');if(!t)return;showDTT(t.dataset.k);});
+document.getElementById('DTT').addEventListener('click',function(e){
+  var row=e.target.closest('[data-dttog]');if(!row)return;
+  var hid=parseInt(row.dataset.dttog),k=row.dataset.dtkey;
+  var h=H.find(function(x){return x.id===hid;});if(!h)return;
+  if(!h.d)h.d={};
+  if(h.d[k]){delete h.d[k];h.s=Math.max(0,(h.s||1)-1);}
+  else{h.d[k]=true;h.s=(h.s||0)+1;}
+  save();
+  renderDTT(k);
+  rM();
+});
 render();
 </script>
 </body>
